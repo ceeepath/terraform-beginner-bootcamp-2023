@@ -145,3 +145,37 @@ If it is succesful you should see a json payload return that looks like this:
 ```
 
 We'll need to generate AWS CLI credits from IAM User in order to the user AWS CLI.
+
+### Terraform Basics [0.5.0]
+
+#### Terraform Registry
+
+Terraform sources their providers and modules from the Terraform registry which is located at [registry.terraform.io](https://registry.terraform.io/)
+
+- **Providers** are plugins that enable Terraform to interact with specific cloud or infrastructure platforms, such as AWS, Azure, or GCP.
+- **Modules** are reusable, self-contained units of Terraform configuration that contains a set of related resources, variables, and outputs. They help organize and simplify infrastructure code by promoting modularity and reusability.
+
+#### Random Terraform Provider
+
+Random Terraform Providers are a way of using randomness in Terraform. They can generate random values of different types, such as names, passwords, or tokens. These values are stored in the Terraform state and only change when the inputs or keepers change. You can learn more from the [Random Terraform Provider](https://registry.terraform.io/providers/hashicorp/random).
+
+#### Terraform Console
+
+We can see a list of all the Terrform commands by simply typing `terraform`
+
+
+- **Terraform Init** is a command in Terraform used to initialize a working directory by downloading the necessary providers and modules specified in your configuration. You run it by typing `terraform init`
+
+- **Terraform Plan** is a Terraform command that examines your configuration and infrastructure to predict the changes that will occur when you apply your Terraform code. It provides a detailed report on what Terraform will do, such as creating, updating, or deleting resources, without actually making any changes to the infrastructure. This allows you to review and confirm the intended modifications before applying them. You run it by typing `terraform plan`
+
+- **Terraform Apply** is a Terraform command used to execute the changes specified in your Terraform configuration. It creates, updates, or deletes resources as needed to align your infrastructure with the desired state defined in your code. It's the command you use to make actual changes to your infrastructure based on your Terraform configuration. You run it by typing `terraform apply`. This will run a plan and pass the changeset to be execute by terraform. Apply should prompt yes or no.
+If we want to automatically approve an apply we can provide the auto approve flag eg. `terraform apply --auto-approve`
+
+#### Basic Terraform Files
+
+- **Terraform Lock Files** e.g., `.terraform.lock.hcl` contains the locked versioning for the providers or modulues that should be used with this project. The Terraform Lock File **should be committed** to your Version Control System (VSC) eg. Github
+
+- **Terraform State Files** e.g., `.terraform.tfstate` contain information about the current state of your infrastructure.
+This file **should not be commited** to your VCS. This file can contain sensentive data. If you lose this file, you lose knowning the state of your infrastructure. `.terraform.tfstate.backup` is the previous state file state.
+
+- **Terraform Directory** `.terraform` directory contains binaries of terraform providers.
