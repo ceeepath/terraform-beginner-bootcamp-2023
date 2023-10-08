@@ -168,8 +168,10 @@ We can see a list of all the Terrform commands by simply typing `terraform`
 
 - **Terraform Plan** is a Terraform command that examines your configuration and infrastructure to predict the changes that will occur when you apply your Terraform code. It provides a detailed report on what Terraform will do, such as creating, updating, or deleting resources, without actually making any changes to the infrastructure. This allows you to review and confirm the intended modifications before applying them. You run it by typing `terraform plan`
 
-- **Terraform Apply** is a Terraform command used to execute the changes specified in your Terraform configuration. It creates, updates, or deletes resources as needed to align your infrastructure with the desired state defined in your code. It's the command you use to make actual changes to your infrastructure based on your Terraform configuration. You run it by typing `terraform apply`. This will run a plan and pass the changeset to be execute by terraform. Apply should prompt yes or no.
+- **Terraform Apply** is used to execute the changes specified in your Terraform configuration. It creates, updates, or deletes resources as needed to align your infrastructure with the desired state defined in your code. It's the command you use to make actual changes to your infrastructure based on your Terraform configuration. You run it by typing `terraform apply`. This will run a plan and pass the changeset to be execute by terraform. Apply should prompt yes or no.
 If we want to automatically approve an apply we can provide the auto approve flag eg. `terraform apply --auto-approve`
+
+- **Terraform Destroy** is used to tear down and remove the resources defined in your Terraform configuration. You run it by typing `terraform destroy`. Just like `apply`, `destroy` should prompt yes or no but we can provide the auto approve flag to automatically destroy without the confirmation prompt eg. `terraform destroy --auto-approve`
 
 #### Basic Terraform Files
 
@@ -179,3 +181,19 @@ If we want to automatically approve an apply we can provide the auto approve fla
 This file **should not be commited** to your VCS. This file can contain sensentive data. If you lose this file, you lose knowning the state of your infrastructure. `.terraform.tfstate.backup` is the previous state file state.
 
 - **Terraform Directory** `.terraform` directory contains binaries of terraform providers.
+
+### AWS S3 Bucket [0.6.0]
+
+#### Naming Convention
+AWS S3 bucket names have the following naming conventions:
+
+- **Globally Unique**: Bucket names must be globally unique across all existing S3 bucket names in AWS. This uniqueness is essential to ensure no naming conflicts.
+
+- **Length**: Bucket names must be between 3 and 63 characters in length.
+
+- **Allowed Characters**: Bucket names can consist of lowercase letters, numbers, hyphens (-), and periods (.), with some rules:
+    - Names can start and end with lowercase letters or numbers.
+    - Names cannot be formatted as IP addresses (e.g., "192.168.1.1").
+    - Names with periods (".") are used for SSL certificates and should be avoided for standard bucket names.
+    - No Uppercase: Bucket names must be in lowercase, as AWS S3 is case-insensitive for bucket names, but using lowercase is recommended for consistency.
+    - No Underscores: Underscores (_) are not allowed; use hyphens (-) instead.
