@@ -4,6 +4,11 @@ terraform {
       source = "hashicorp/random"
       version = "3.5.1"
     }
+
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.20.0"
+    }
   }
 }
 
@@ -11,11 +16,19 @@ provider "random" {
   # Configuration options
 }
 
+# Definition for Bucket Name
 resource "random_string" "bucket_name" {
-  length   = 16
+  length   = 25
   special  = false
+  numeric  = false
+  lower    = true
+  upper    = false
 }
 
-output "random_bucket_name" {
-  value = random_string.bucket_name.result
-}
+
+# Creation of S3_Bucket in AWS
+resource "aws_s3_bucket" "bucket" {
+  bucket = random_string.bucket_name.result
+  }
+
+
