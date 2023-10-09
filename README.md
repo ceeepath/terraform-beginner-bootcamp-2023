@@ -235,3 +235,7 @@ Provide the following code (replace your token in the file):
 We need to configure our AWS Credentials in Terraform Cloud before running `terraform plan`.
 
 In the Terraform Cloud platform, go to `Settings -> Variable Sets -> Create Variable Set`, input a preferred "name", select "Apply to specific projects and workspaces". Select the preferred project and workspace you want it to be applied to and click on button "Add Variable". Select "Environment variable" option, and fill in the `AWS_ACCESS_KEY_ID` and its value from AWS credential(IAM). Check the "sensitive" checkbox and click on buttom "Add Variable". Do the same for the `AWS_SECRET_ACCESS_KEY` as well as the `AWS_DEFAULT_REGION`. Click on `Create Variable Set` to group the Variable and it should be applied to the workspace. [Read More](https://stackoverflow.com/questions/71906029/terraform-error-configuring-aws-provider-backend-issue)
+
+### Set TFRC Token [0.8.0]
+
+We created a workaround to [0.7.0] using the [bash script](bin/set_tfrc_token.sh) and set the Token from Terraform cloud as an environmental variable `export TERRAFORM_CLOUD_TOKEN='Your_Terraform_Cloud_Token'`.
