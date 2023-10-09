@@ -239,3 +239,7 @@ In the Terraform Cloud platform, go to `Settings -> Variable Sets -> Create Vari
 ### Set TFRC Token [0.8.0]
 
 We created a workaround to [0.7.0] using the [bash script](bin/set_tfrc_token.sh) and set the Token from Terraform cloud as an environmental variable `export TERRAFORM_CLOUD_TOKEN='Your_Terraform_Cloud_Token'`.
+
+### Set tf alias for Terraform [0.9.0]
+
+We set an alias for Terraform as "tf" in the ~/.bash_profile file so we can simply run terraform commands using `tf`. We also automated this using a [bash script](./bin/set_tf_alias.sh) that runs any time we start up gitpod by adding it to the gitpod.yaml file.
