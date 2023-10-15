@@ -6,7 +6,7 @@
     + [Shebang Considerations](#shebang-considerations)
     + [Execution Considerations](#execution-considerations)
     + [Linux Permissions Considerations](#linux-permissions-considerations)
-    + [Gitpod Lifecycle (Before, Init, Command)](#github-lifecycle--before--init--command-)
+  * [Gitpod Lifecycle (Before, Init, Command)](#github-lifecycle--before--init--command-)
 - [Managing Environment Variables [0.3.0]](#managing-environment-variables--030-)
   * [Listing Environment Variables](#listing-environment-variables)
   * [Setting and Unsetting Environment Variables](#setting-and-unsetting-environment-variables)
@@ -87,7 +87,7 @@ chmod 744 ./bin/install_terraform_cli
 
 https://en.wikipedia.org/wiki/Chmod
 
-#### Gitpod Lifecycle (Before, Init, Command)
+### Gitpod Lifecycle (Before, Init, Command)
 
 We need to be careful when using the Init because it will not rerun if we restart an existing workspace.
 
