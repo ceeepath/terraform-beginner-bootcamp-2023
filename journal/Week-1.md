@@ -68,3 +68,12 @@ The order of precedence for variable sources is as follows with later sources ta
 - terraform.tfvars.json file
 - Any *.auto.tfvars or *.auto.tfvars.json files
 - Any -var and -var-file options on the command line, in the order they are provided.
+
+### Migrating backend from Terraform Cloud to Local
+We had to comment the Terraform cloud provider block in the `providers.tf` file. When we ran `terraform init` we got the error:
+
+```bash
+Error: Migrating state from Terraform Cloud to another backend is not yet implemented.
+```
+
+We fixed this by deleting the `.terraform` directory and the `.terraform.lock.hcl` file.
