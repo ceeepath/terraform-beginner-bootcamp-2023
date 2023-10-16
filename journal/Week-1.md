@@ -1,6 +1,6 @@
 # Terraform Beginner Bootcamp 2023 - Week-1
 
-## Root Module Structure
+## Root Module Structure [1.1.0]
 
 The standard module structure is a file and directory layout recommended for reusable modules distributed in separate repositories. The standard module structure expects the layout documented below:
 
@@ -15,3 +15,56 @@ PROJECT_ROOT
 └── README.md               # required for root modules
 ```
 [Standard Module Structure](https://developer.hashicorp.com/terraform/language/modules/develop/structure)
+
+### Terraform Cloud Variables
+
+In terraform we can set two kind of variables:
+- Enviroment Variables - those you would set in your bash terminal eg. AWS credentials
+- Terraform Variables - those that you would normally set in your tfvars file
+
+We can set Terraform Cloud variables to be sensitive so they are not shown visibliy in the UI.
+
+- **Using environment variables**
+
+You can use environment variables to define values for your configuration. One thing to note is that environment variables are prefixed with `TF_VAR_`. For example, to set the value of a variable named **bucket-name**, you would set the environment variable `TF_VAR_bucket-name`. It can be set ths way:
+
+```sh
+export TF_VAR_bucket_name="my-s3-bucket"
+```
+
+- **Loading Terraform Input Variables**
+We can add variables using the variables block directly in the `main.tf` file or using a separate `variables.tf` file. The variable block can be defind this way:
+
+```h
+variable "example_var" {
+  type    = string
+  default = "default_value"
+}
+```
+[Terraform Input Variables](https://developer.hashicorp.com/terraform/language/values/variables)
+
+- **var flag**
+We can use the `-var` flag to set an input variable or override a variable in the tfvars file eg. `terraform -var user_uuid="my-user_id"`
+
+- **terraform.tvfars**
+
+This is the default filename that Terraform looks for variables. You can also use other filenames and specify them explicitly using the `-var-file` command-line option when running Terraform commands.
+
+- **var-file flag**
+
+To apply your Terraform configuration with the variable values from a specific .tfvars file, you can use the -var-file flag like this: `terraform apply -var-file="vpc-variables.tfvars"`
+
+- ***.auto.tfvars**
+
+Terraform also automatically loads a file named `*.auto.tfvars` if it exists in the current working directory. The behavior of auto.tfvars is essentially the same as that of terraform.tfvars. You can use auto.tfvars to set values for your variables without the need to specify the variable file explicitly when running Terraform commands. If both files exist, Terraform will merge the variable values from both files, with values in auto.tfvars taking precedence if there are any conflicts.
+
+#### order of terraform variables
+
+The order of precedence for variable sources is as follows with later sources taking precedence over earlier ones:
+
+- Environment variables
+- Variable blocks
+- The terraform.tfvars file
+- terraform.tfvars.json file
+- Any *.auto.tfvars or *.auto.tfvars.json files
+- Any -var and -var-file options on the command line, in the order they are provided.
