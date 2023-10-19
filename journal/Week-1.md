@@ -77,3 +77,23 @@ Error: Migrating state from Terraform Cloud to another backend is not yet implem
 ```
 
 We fixed this by deleting the `.terraform` directory and the `.terraform.lock.hcl` file.
+
+
+## Dealing With Configuration Drift [1.2.0]
+
+If someone goes and delete or modifies cloud resource initially created in terraform through ClickOps, we can use terraform import to fix the configuration drift thereby making the state of the resource on the console agree with what is on terraform.
+
+### Terraform Import
+
+Terraform import is a command used to import the current state of an external resource into a Terraform configuration file, enabling you to manage that resource's lifecycle using Terraform. We can either use an import block like:
+
+```h
+import {
+  to = aws_s3_bucket.bucket
+  id = "bucket-name"
+}
+```
+
+OR
+
+A one-line command `terraform import aws_s3_bucket.bucket bucket-name`.
