@@ -98,6 +98,12 @@ OR
 
 A one-line command `terraform import aws_s3_bucket.bucket bucket-name`.
 
+### Fix using Terraform Refresh
+
+```sh
+terraform apply -refresh-only -auto-approve
+```
+
 ## Terraform Modules [1.3.0]
 
 ### Terraform Module Structure
