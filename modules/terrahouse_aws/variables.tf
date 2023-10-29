@@ -19,3 +19,18 @@ variable "bucket_name" {
     error_message = "The bucket name must be between 3 and 63 characters, start and end with a lowercase letter or number, and can contain only lowercase letters, numbers, hyphens, and dots."
   }
 }
+
+variable "website_files" {
+  description = "Name of the index and error document for the website"
+  type = map(string)
+}
+
+variable "file_path" {
+  description = "Path of the index and error document for the website"
+  type = map(string)
+
+  validation {
+  condition = fileexists(var.file_path.index) && fileexists(var.file_path.error)
+  error_message = "One or both of the provided file paths do not exist."
+  }
+}
