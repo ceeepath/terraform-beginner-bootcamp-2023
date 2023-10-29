@@ -138,3 +138,81 @@ module "terrahouse_aws" {
 
 
 [Modules Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+
+
+## Static Website Configuration [1.4.0]
+
+Here we made use of the `aws_s3_bucket_website_configuration` resource to enable and configure static website hosting on our s3. We also made use of the `aws_s3_object` resource to upload our index.html and error.html file to the s3 bucket.
+
+### Terraform **for_each** meta-argument
+The `for_each` argument in Terraform allows you to create multiple instances of a resource or module based on the elements of a map or set, instead of writing them individually. It's used to iterate over a collection and generate resource instances dynamically. This is particularly useful when you have multiple similar resources with different configurations or when you want to manage multiple resources using a single declaration. [Read more here](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
+
+In this task, i used it to copy both **"index.html"** and **"error.html"** files using one resource block, there by making my code portable. For this to work, i made use of a single variable block with type `map(string)` to define the file path. See structure below:
+
+```t
+variable "file_path" {
+  description = "Path of the index and error document for the website"
+  type        = map(string)
+}
+
+file_path = {
+  index = "/path/to/file"
+  error = "/path/to/file"
+}
+
+resource "aws_s3_object" "file" {
+  for_each = var.file_path
+  bucket = aws_s3_bucket.bucket.bucket
+  key    = "${each.key}.html"
+  source = each.value
+  etag = filemd5(each.value)
+}
+```
+
+### Working with Filesystem in Terraform
+
+#### Fileexists function
+
+This is used to determines whether a file exists at a given path. We used it in this task to validate the website configuration files. [Read more here](https://developer.hashicorp.com/terraform/language/functions/fileexists)
+
+Example:
+```h
+condition = fileexists(var.file_path.index)
+```
+
+#### Filemd5
+
+In Terraform, `filemd5` is a built-in function that calculates the MD5 hash of a file. It can be used to detect changes in the content of a file. It calculates the MD5 hash of a file, and if the content of the file changes, the MD5 hash will also change. The function takes a single argument, which is the path to the file, and returns the MD5 hash as a hexadecimal string.
+Example:
+```h
+value = filemd5(var.file_path)
+```
+In this task, we used it to detect changes in the index.html and error.html files so it can apply the new changes when we run terraform apply.
+
+#### Path Variable
+
+In terraform there is a special variable called `path` that allows us to reference local paths:
+- path.module = get the path for the current module
+- path.root = get the path for the root module
+[Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+```h
+resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+}
+```
+
+### ETags in Cloud Services
+Cloud storage services liks s3 bucket often use **"ETags"** to help manage object versioning and to facilitate efficient transfers and synchronization of data. In Terraform, the `etag` attribute is used with some data sources to capture and manage the ETag of a remote resource. In this task, we made use of the ETag attribute to receive a new HASH from `Filemd5` whenever the content of our local website files changes.
+
+Example:
+```t
+resource "aws_s3_object" "file" {
+  bucket = aws_s3_bucket.bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+  etag = filemd5(${path.root}/public/index.html)
+}
+```

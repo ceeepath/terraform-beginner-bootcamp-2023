@@ -21,8 +21,21 @@
 
 module "terrahouse_aws" {
   source = "./modules/terrahouse_aws"
-  user_uuid = var.user_uuid
+  # Creating the S3 Bucket
+  user_uuid   = var.user_uuid
   bucket_name = var.bucket_name
+
+  # Naming documents for static website hosting
+  website_files = {
+    index = var.website_files.index
+    error = var.website_files.error
+  }
+
+  # Configuring the S3 Bucket for static website hosting
+  file_path = {
+    index = var.file_path.index
+    error = var.file_path.error
+  }
 }
 
 
