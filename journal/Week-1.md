@@ -1,5 +1,29 @@
 # Terraform Beginner Bootcamp 2023 - Week-1
 
+## Fixing Tags
+
+[How to Delete Local and Remote Tags on Git](https://devconnected.com/how-to-delete-local-and-remote-tags-on-git/)
+
+Locall delete a tag
+```sh
+git tag -d <tag_name>
+```
+
+Remotely delete tag
+
+```sh
+git push --delete origin tagname
+```
+
+Checkout the commit that you want to retag. Grab the sha from your Github history.
+
+```sh
+git checkout <SHA>
+git tag M.M.P
+git push --tags
+git checkout main
+```
+
 ## Root Module Structure [1.1.0]
 
 The standard module structure is a file and directory layout recommended for reusable modules distributed in separate repositories. The standard module structure expects the layout documented below:
@@ -216,3 +240,55 @@ resource "aws_s3_object" "file" {
   etag = filemd5(${path.root}/public/index.html)
 }
 ```
+
+
+## CDN Implementation with AWS CloudFront [1.5.0]
+
+In this Task, we implemented a CDN using `aws_cloudfront_distribution` and `aws_cloudfront_origin_access_control`. We also gave the origin access control a **"read-only"** access permission to access the S3 bucket using `aws_s3_bucket_policy`. I also set all my resource and data block names to **"terratown"** for ease of reference.
+
+### Terraform concepts implemented
+
+To make our .tf files not too long and easily readable, we created a `resource-cdn.tf` to handle the CloudFront configurations and `resource-storage.tf` to handle the s3 configurations. We also implemented two new Terraform concepts; Terraform Data Sources and Terraform Locals.
+
+#### Terraform Data Sources
+
+This allows use to source data from cloud resources.
+
+This is useful when we want to reference cloud resources without importing them.
+
+```tf
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+```
+[Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)
+
+
+#### Terraform Locals
+
+Locals allows us to define local variables.
+It can be very useful when we need transform data into another format and have referenced a varaible.
+
+```tf
+locals {
+  s3_origin_id = "MyS3Origin"
+}
+```
+[Local Values](https://developer.hashicorp.com/terraform/language/values/locals)
+
+We also made use of jsonencode to create the json policy in the locals.tf and referenced it in the resource-storage.tf file.
+
+```tf
+> jsonencode({"hello"="world"})
+{"hello":"world"}
+```
+
+[jsonencode](https://developer.hashicorp.com/terraform/language/functions/jsonencode)
+
+### Content Type
+We had to set the content type of our website files in the `aws_s3_object` resource to enable s3 serve us the webpages when accessed through a browser instead of download it as an attachment.
+
+The content_type argument is used to specify the MIME type of the object stored in an AWS S3 bucket using Terraform. The MIME type is a standard way of indicating the nature and format of a document or file. It can help applications to handle the object appropriately, such as displaying it in a browser or downloading it as an attachment. [Read More Here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+
