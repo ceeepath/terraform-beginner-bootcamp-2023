@@ -8,4 +8,5 @@ file_path = {
   index = "/workspace/terraform-beginner-bootcamp-2023/public/index.html"
   error = "/workspace/terraform-beginner-bootcamp-2023/public/error.html"
 }
+assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 content_version = 1
