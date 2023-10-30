@@ -28,10 +28,18 @@ resource "aws_s3_object" "terratown" {
   source = each.value
   content_type = local.content_type
   etag = filemd5(each.value)
+  lifecycle {
+    replace_triggered_by = [ terraform_data.content_version.output ]
+    ignore_changes = [ etag ]
+  }
 }
 
 resource "aws_s3_bucket_policy" "terratown" {
   bucket = aws_s3_bucket.terratown.bucket
   #policy = data.aws_iam_policy_document.allow_access_from_another_account.json
   policy = local.policy
+}
+
+resource "terraform_data" "content_version" {
+  input = var.content_version
 }
