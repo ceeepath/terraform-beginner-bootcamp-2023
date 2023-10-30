@@ -36,6 +36,9 @@ module "terrahouse_aws" {
     index = var.file_path.index
     error = var.file_path.error
   }
+
+  # Implementing content versioning for website files
+  content_version = var.content_version
 }
 
 

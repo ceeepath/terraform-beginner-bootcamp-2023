@@ -17,3 +17,8 @@ variable "file_path" {
   description = "Path of the index and error document for the website"
   type        = map(string)
 }
+
+variable "content_version" {
+  description = "The content version. Should be a positive integer starting at 1."
+  type        = number
+}
