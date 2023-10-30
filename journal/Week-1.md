@@ -292,3 +292,85 @@ We had to set the content type of our website files in the `aws_s3_object` resou
 
 The content_type argument is used to specify the MIME type of the object stored in an AWS S3 bucket using Terraform. The MIME type is a standard way of indicating the nature and format of a document or file. It can help applications to handle the object appropriately, such as displaying it in a browser or downloading it as an attachment. [Read More Here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
 
+
+## Content Versioning [1.6.0]
+
+To decide when terraform apply make changes to our website files, we decided to implement content versioning using Terraform data and Terraform Lifecycle Meta Argument.
+
+### Terraform Data [https://developer.hashicorp.com/terraform/language/resources/terraform-data]
+
+The terraform_data resource is useful for storing values which need to follow a manage resource lifecycle, and for triggering provisioners when there is no other logical managed resource in which to place them.
+
+### The lifecycle Meta-Argument [https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle]
+
+The lifecycle meta-argument is a special nested block that can appear within a resource block in Terraform. It allows you to customize some aspects of the resource’s behavior, such as how it is created, updated, replaced, or destroyed. The arguments available within a lifecycle block are `create_before_destroy`, `prevent_destroy`, `ignore_changes`, and `replace_triggered_by`.
+
+In this task, we made use of both `ignore_changes`, and `replace_triggered_by` argument.
+
+
+## Invalidate CloudFront Distribution [1.7.0]
+
+To remove a file or files from the edge caches before they expire, so that the next time a viewer requests the file, CloudFront returns to the origin to fetch the latest version of the file we had to implement CloudFront Distribution Invalidation.
+
+We made use of Terraform data `triggers_replace` and the `local-exec` provisioner.
+
+### Provisioners [https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax]
+
+Provisioners allow you to execute commands on compute instances eg. a AWS CLI command.
+They are not recommended for use by Hashicorp because Configuration Management tools such as Ansible are a better fit, but the functionality exists.
+
+#### Local-exec
+
+This will execute command on the machine running the terraform commands eg. plan apply
+
+```tf
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo The server's IP address is ${self.private_ip}"
+  }
+}
+```
+
+[Read More on Local Exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)
+
+#### Remote-exec
+
+This will execute commands on a machine which you target. You will need to provide credentials such as ssh to get into the machine.
+
+```tf
+resource "aws_instance" "web" {
+  # ...
+
+  # Establishes connection to be used by all
+  # generic remote provisioners (i.e. file/remote-exec)
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
+  }
+}
+```
+[Read More on Remote Exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec)
+
+### Heredoc Strings
+
+We learnt about the use of heredoc style in writing multi-line string. For example:
+
+```tf
+<<EOT
+hello
+world
+EOT
+```
+
+[Read More](https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings)
