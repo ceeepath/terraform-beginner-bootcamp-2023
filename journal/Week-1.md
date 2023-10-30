@@ -374,3 +374,31 @@ EOT
 ```
 
 [Read More](https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings)
+
+
+## Assets Upload [1.8.0]
+
+We made use of for_each and fileset function to accomplish this task.
+
+### for_each
+
+[Read Here](#terraform-for_each-meta-argument)
+
+
+### fileset Function [https://developer.hashicorp.com/terraform/language/functions/fileset]
+
+The fileset function lists out a set of regular file names given a path and pattern as its arguments. 
+
+```tf
+fileset(path, pattern)
+```
+For example;
+
+```tf
+> fileset(path.module, "files/*.txt")
+[
+  "files/hello.txt",
+  "files/world.txt",
+]
+```
+

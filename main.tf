@@ -39,6 +39,9 @@ module "terrahouse_aws" {
 
   # Implementing content versioning for website files
   content_version = var.content_version
+
+  # Uploading Assets to s3 bucket
+  assets_path = var.assets_path
 }
 
 
