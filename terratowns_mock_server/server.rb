@@ -204,6 +204,7 @@ class TerraTownsMockServer < Sinatra::Base
       error 404, "failed to find home with provided uuid and bearer token"
     end
 # delete from mock database
+    uuid = $home[:uuid]
     $home = {}
     { uuid: uuid }.to_json
   end
