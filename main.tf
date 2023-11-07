@@ -67,10 +67,7 @@ Football Manager 2023 is a simulation game that lets you take
 charge of a football club and lead them to glory.
 A die-hard Manchester United fan, Pathfinder, takes charge of his beloved club in Football Manager 2023. 
 Frustrated with the team's lackluster performances, he embarks on a virtual journey to transform the club, 
-instilling a possession-based style, promoting youth, and making shrewd, budget-friendly signings. 
-With a dedicated backroom staff, he drills the players both physically and mentally, turning them into a formidable force. 
-The climax comes in a thrilling Europa League Final against Arsenal, where a halftime pep talk sparks a remarkable comeback. 
-The virtual success reignites hope among fans, and Pathfinder's vision extends beyond the screen, leaving a lasting impact on the club's future.
+instilling a possession-based style, promoting youth, and making shrewd, budget-friendly signings.
 DESCRIPTION
   #domain_name = module.terrahouse_aws.cloudfront_url
   domain_name = module.terrahouse_aws.cloudfront_domain_name
