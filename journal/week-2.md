@@ -54,3 +54,24 @@ bundle exec ruby server.rb
 ```
 
 All of the code for our server is stored in the `server.rb` file.
+
+## Setting up our custom terraform provider [2.1.0]
+
+### CRUD
+
+Terraform Provider resources utilize CRUD.
+
+CRUD stands for Create, Read, Update, and Delete, which are the four fundamental operations for managing resources in a custom Terraform provider:
+
+- **Create:** In the context of a custom Terraform provider, "Create" refers to the ability to define and provision new resources or objects in the infrastructure. It involves specifying the desired state of a resource and using Terraform to create it.
+
+- **Read:** "Read" involves querying and retrieving information about existing resources or objects. Terraform providers allow you to fetch the current state or attributes of resources that have already been provisioned.
+
+- **Update:** "Update" enables you to modify the configuration or attributes of existing resources. You can use Terraform to make changes to resource properties and ensure that the infrastructure aligns with the desired state.
+
+- **Delete:** "Delete" allows you to remove resources that are no longer needed. Terraform can be used to destroy resources that were previously created, effectively removing them from the infrastructure.
+
+These CRUD operations are essential for managing infrastructure resources using Terraform and are a fundamental part of custom Terraform providers, as they define how Terraform interacts with specific APIs or services to create, read, update, and delete resources in those systems.
+
+
+https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
