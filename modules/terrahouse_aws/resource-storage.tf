@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "terratown" {
   bucket = var.bucket_name
 
   tags = {
-    UserUuid = var.user_uuid
+    UserUuid = var.teacherseat_user_uuid
   }
   }
 

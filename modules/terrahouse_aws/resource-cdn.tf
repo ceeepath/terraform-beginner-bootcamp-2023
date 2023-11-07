@@ -51,7 +51,7 @@ resource "aws_cloudfront_distribution" "terratown" {
   }
 
   tags = {
-    UserUuid = var.user_uuid
+    UserUuid = var.teacherseat_user_uuid
   }
 
   viewer_certificate {
