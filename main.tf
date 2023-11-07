@@ -61,13 +61,13 @@ module "terrahouse_aws" {
 }
 
 resource "terratowns_home" "home" {
-  name = "My Football Manager 2023"
+  name = "Reviving the Red Devils: A Football Manager 2023 Saga"
   description = <<DESCRIPTION
 Football Manager 2023 is a simulation game that lets you take 
 charge of a football club and lead them to glory.
-You can choose from over 100 leagues and 50 nations to manage, 
-as well as create your own tactics, sign players, develop youth prospects, 
-and compete in various tournaments.
+A die-hard Manchester United fan, Pathfinder, takes charge of his beloved club in Football Manager 2023. 
+Frustrated with the team's lackluster performances, he embarks on a virtual journey to transform the club, 
+instilling a possession-based style, promoting youth, and making shrewd, budget-friendly signings.
 DESCRIPTION
   #domain_name = module.terrahouse_aws.cloudfront_url
   domain_name = module.terrahouse_aws.cloudfront_domain_name
