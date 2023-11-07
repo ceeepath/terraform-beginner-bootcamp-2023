@@ -1,4 +1,4 @@
-variable "user_uuid" {
+variable "teacherseat_user_uuid" {
   type        = string
   description = "My Exam-Pro UUID"
 }
@@ -26,4 +26,13 @@ variable "content_version" {
 variable "assets_path" {
   description = "Path to assets folder"
   type        = string
+}
+
+variable "terratowns_endpoint" {
+  description = "The endpoint URL of our Terratowns cloud"
+  type = string
+}
+
+variable "terratowns_access_token" {
+ type = string
 }
