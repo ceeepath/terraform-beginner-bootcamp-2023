@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error</title>
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        .error-container {
+            margin: 10% auto;
+            padding: 20px;
+            max-width: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #f00;
+        }
+    </style>
 </head>
 <body>
-    <p>Error!</p>
+    <div class="error-container">
+        <h1>Error Page</h1>
+        <p>Sorry, but an error has occurred. Please try again later or contact support for assistance.</p>
+        <p><a href="/">Go back to the homepage</a></p>
+    </div>
 </body>
 </html>

@@ -1,4 +1,3 @@
-user_uuid = "ab2a3030-158c-43a4-83fd-f366a246700e"
 terratowns_endpoint= "https://terratowns.cloud/api"
 bucket_name = "bykzjcclfarcfrlecpiylklcz"
 website_files = {
