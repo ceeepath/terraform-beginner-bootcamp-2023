@@ -61,12 +61,13 @@ module "terrahouse_aws" {
 }
 
 resource "terratowns_home" "home" {
-  name = "How to play Arcanum in 2023"
+  name = "My Football Manager 2023"
   description = <<DESCRIPTION
-Arcanum is a game from 2001 that shipped with alot of bugs.
-Modders have removed all the originals making this game really fun
-to play (despite that old look graphics). This is my guide that will
-show you how to play arcanum without spoiling the plot.
+Football Manager 2023 is a simulation game that lets you take 
+charge of a football club and lead them to glory.
+You can choose from over 100 leagues and 50 nations to manage, 
+as well as create your own tactics, sign players, develop youth prospects, 
+and compete in various tournaments.
 DESCRIPTION
   #domain_name = module.terrahouse_aws.cloudfront_url
   domain_name = module.terrahouse_aws.cloudfront_domain_name
