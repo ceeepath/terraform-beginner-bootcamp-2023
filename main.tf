@@ -5,28 +5,15 @@ terraform {
       version = "1.0.0"
     }
   }
+
+  cloud {
+    organization = "ceeepath"
+    workspaces {
+      name = "Terra-House-01"
+    }
+  }
 }
 
-# terraform {
-
-#   # cloud {
-#   #   organization = "ceeepath"
-#   #   workspaces {
-#   #     name = "Terra-House-01"
-#   #   }
-#   # }
-
-#   required_providers {
-#     aws = {
-#       source = "hashicorp/aws"
-#       version = "5.20.0"
-#     }
-#   }
-# }
-
-# provider "aws" {
-#   # Configuration options
-# }
 
 provider "terratowns" {
   endpoint = var.terratowns_endpoint
