@@ -9,6 +9,7 @@ tasks:
       source ./bin/set_tfrc_token.sh
       source ./bin/build_provider.sh
       cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
+      cd $PROJECT_ROOT
 
   - name: sinatra
     before: |
