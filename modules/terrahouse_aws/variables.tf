@@ -20,21 +20,6 @@ variable "bucket_name" {
   }
 }
 
-variable "website_files" {
-  description = "Name of the index and error document for the website"
-  type = map(string)
-}
-
-variable "file_path" {
-  description = "Path of the index and error document for the website"
-  type = map(string)
-
-  validation {
-  condition = fileexists(var.file_path.index) && fileexists(var.file_path.error)
-  error_message = "One or both of the provided file paths do not exist."
-  }
-}
-
 variable "content_version" {
   description = "The content version. Should be a positive integer starting at 1."
   type        = number
@@ -45,6 +30,7 @@ variable "content_version" {
   }
 }
 
-variable "assets_path" {
-  type = string
+variable "public_path" {
+  description = "The file path for the public directory"
+  type        = string
 }

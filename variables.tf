@@ -8,26 +8,6 @@ variable "bucket_name" {
   type        = string
 }
 
-variable "website_files" {
-  description = "Name of the index and error document for the website"
-  type        = map(string)
-}
-
-variable "file_path" {
-  description = "Path of the index and error document for the website"
-  type        = map(string)
-}
-
-variable "content_version" {
-  description = "The content version. Should be a positive integer starting at 1."
-  type        = number
-}
-
-variable "assets_path" {
-  description = "Path to assets folder"
-  type        = string
-}
-
 variable "terratowns_endpoint" {
   description = "The endpoint URL of our Terratowns cloud"
   type = string
@@ -35,4 +15,18 @@ variable "terratowns_endpoint" {
 
 variable "terratowns_access_token" {
  type = string
+}
+
+variable "football_manager" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
+
+variable "terraform" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
 }

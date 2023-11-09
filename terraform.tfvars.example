@@ -1,12 +1,12 @@
 terratowns_endpoint= "https://terratowns.cloud/api"
 bucket_name = "bykzjcclfarcfrlecpiylklcz"
-website_files = {
-    index = "index.html"
-    error = "error.html"
+
+football_manager = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/football-manager"
+  content_version = 1
 }
-file_path = {
-  index = "/workspace/terraform-beginner-bootcamp-2023/public/index.html"
-  error = "/workspace/terraform-beginner-bootcamp-2023/public/error.html"
+
+terraform = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/terraform"
+  content_version = 1
 }
-assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
-content_version = 1

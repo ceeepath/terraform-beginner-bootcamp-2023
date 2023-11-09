@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "terratown" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Static website hosting for: ${var.bucket_name}"
-  default_root_object = var.website_files.index
+  default_root_object = local.index
 
   #aliases = ["mysite.example.com", "yoursite.example.com"] we do not need this for now since we are not implementing a custom domain name
 

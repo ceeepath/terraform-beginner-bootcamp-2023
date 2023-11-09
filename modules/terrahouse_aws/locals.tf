@@ -1,6 +1,8 @@
 locals {
   s3_origin_id = "MyS3Origin"
   content_type = "text/html"
+  index = "index.html"
+  error = "error.html"
   policy = jsonencode({
     "Version" = "2012-10-17",
     "Statement" = {
