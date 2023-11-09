@@ -1,8 +1,8 @@
 # https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control
 resource "aws_cloudfront_origin_access_control" "terratown" {
-  name   = "OAC-${var.bucket_name}"
-  description  = "Origin Access Controls for Static Website Hosting on ${var.bucket_name}"
+  name   = "OAC-${aws_s3_bucket.terratown.bucket}"
+  description  = "Origin Access Controls for Static Website Hosting on ${aws_s3_bucket.terratown.bucket}"
   origin_access_control_origin_type = "s3"
   signing_behavior  = "always"
   signing_protocol  = "sigv4"
@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "terratown" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "Static website hosting for: ${var.bucket_name}"
+  comment             = "Static website hosting for: ${aws_s3_bucket.terratown.bucket}"
   default_root_object = local.index
 
   #aliases = ["mysite.example.com", "yoursite.example.com"] we do not need this for now since we are not implementing a custom domain name

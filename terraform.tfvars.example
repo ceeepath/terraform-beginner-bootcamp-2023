@@ -1,5 +1,4 @@
 terratowns_endpoint= "https://terratowns.cloud/api"
-bucket_name = "bykzjcclfarcfrlecpiylklcz"
 
 football_manager = {
   public_path = "/workspace/terraform-beginner-bootcamp-2023/public/football-manager"

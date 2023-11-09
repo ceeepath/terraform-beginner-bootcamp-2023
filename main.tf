@@ -24,7 +24,6 @@ provider "terratowns" {
 module "football_manager" {
   source = "./modules/terrahouse_aws"
   teacherseat_user_uuid = var.teacherseat_user_uuid
-  bucket_name = var.bucket_name
   public_path = var.football_manager.public_path
   content_version = var.football_manager.content_version
 }
@@ -47,7 +46,6 @@ DESCRIPTION
 module "terraform" {
   source = "./modules/terrahouse_aws"
   teacherseat_user_uuid = var.teacherseat_user_uuid
-  bucket_name = var.bucket_name
   public_path = var.terraform.public_path
   content_version = var.terraform.content_version
 }
