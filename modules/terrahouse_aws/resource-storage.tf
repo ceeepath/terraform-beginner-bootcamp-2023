@@ -1,7 +1,6 @@
 # Creating S3 Bucket [https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket]
 resource "aws_s3_bucket" "terratown" {
-  bucket = var.bucket_name
-
+  
   tags = {
     UserUuid = var.teacherseat_user_uuid
   }
@@ -12,22 +11,33 @@ resource "aws_s3_bucket_website_configuration" "terratown" {
   bucket = aws_s3_bucket.terratown.id
 
   index_document {
-    suffix = var.website_files.index
+    suffix = local.index
   }
 
   error_document {
-    key = var.website_files.error
+    key = local.error
   }
 }
 
 # Upload website files to S3 Bucket [https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object]
-resource "aws_s3_object" "terratown" {
-  for_each = var.file_path
+resource "aws_s3_object" "terratown_index" {
   bucket = aws_s3_bucket.terratown.bucket
-  key    = "${each.key}.html"
-  source = each.value
+  key    = local.index
+  source = "${var.public_path}/index.html"
   content_type = local.content_type
-  etag = filemd5(each.value)
+  etag = filemd5("${var.public_path}/index.html")
+  lifecycle {
+    replace_triggered_by = [ terraform_data.content_version.output ]
+    ignore_changes = [ etag ]
+  }
+}
+
+resource "aws_s3_object" "terratown_error" {
+  bucket = aws_s3_bucket.terratown.bucket
+  key    = local.error
+  source = "${var.public_path}/error.html"
+  content_type = local.content_type
+  etag = filemd5("${var.public_path}/error.html")
   lifecycle {
     replace_triggered_by = [ terraform_data.content_version.output ]
     ignore_changes = [ etag ]
@@ -35,11 +45,11 @@ resource "aws_s3_object" "terratown" {
 }
 
 resource "aws_s3_object" "terratown_assets" {
-  for_each = fileset(var.assets_path,"*.{jpg,png,gif}")
+  for_each = fileset("${var.public_path}/assets","*.{jpg,png,gif}")
   bucket = aws_s3_bucket.terratown.bucket
   key    = "assets/${each.key}"
-  source = "${var.assets_path}/${each.key}"
-  etag = filemd5("${var.assets_path}/${each.key}")
+  source = "${var.public_path}/assets/${each.key}"
+  etag = filemd5("${var.public_path}/assets/${each.key}")
   lifecycle {
     replace_triggered_by = [terraform_data.content_version.output]
     ignore_changes = [etag]

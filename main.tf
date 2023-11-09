@@ -5,28 +5,15 @@ terraform {
       version = "1.0.0"
     }
   }
+
+  cloud {
+    organization = "ceeepath"
+    workspaces {
+      name = "Terra-Home-01"
+    }
+  }
 }
 
-# terraform {
-
-#   # cloud {
-#   #   organization = "ceeepath"
-#   #   workspaces {
-#   #     name = "Terra-House-01"
-#   #   }
-#   # }
-
-#   required_providers {
-#     aws = {
-#       source = "hashicorp/aws"
-#       version = "5.20.0"
-#     }
-#   }
-# }
-
-# provider "aws" {
-#   # Configuration options
-# }
 
 provider "terratowns" {
   endpoint = var.terratowns_endpoint
@@ -34,33 +21,14 @@ provider "terratowns" {
   token= var.terratowns_access_token
 }
 
-module "terrahouse_aws" {
+module "football_manager" {
   source = "./modules/terrahouse_aws"
-  # Creating the S3 Bucket
   teacherseat_user_uuid = var.teacherseat_user_uuid
-  bucket_name = var.bucket_name
-
-  # Naming documents for static website hosting
-  website_files = {
-    index = var.website_files.index
-    error = var.website_files.error
-  }
-
-  # Configuring the S3 Bucket for static website hosting
-  file_path = {
-    index = var.file_path.index
-    error = var.file_path.error
-  }
-
-  # Implementing content versioning for website files
-  content_version = var.content_version
-
-  # Uploading Assets to s3 bucket
-  assets_path = var.assets_path
-
+  public_path = var.football_manager.public_path
+  content_version = var.football_manager.content_version
 }
 
-resource "terratowns_home" "home" {
+resource "terratowns_home" "football_manager" {
   name = "Reviving the Red Devils: A Football Manager 2023 Saga"
   description = <<DESCRIPTION
 Football Manager 2023 is a simulation game that lets you take 
@@ -70,9 +38,29 @@ Frustrated with the team's lackluster performances, he embarks on a virtual jour
 instilling a possession-based style, promoting youth, and making shrewd, budget-friendly signings.
 DESCRIPTION
   #domain_name = module.terrahouse_aws.cloudfront_url
-  domain_name = module.terrahouse_aws.cloudfront_domain_name
+  domain_name = module.football_manager.cloudfront_domain_name
   town = "missingo"
-  content_version = 1
+  content_version = var.football_manager.content_version
+}
+
+module "terraform" {
+  source = "./modules/terrahouse_aws"
+  teacherseat_user_uuid = var.teacherseat_user_uuid
+  public_path = var.terraform.public_path
+  content_version = var.terraform.content_version
+}
+
+resource "terratowns_home" "terraform" {
+  name = "Terraform Beginner Bootcamp"
+  description = <<DESCRIPTION
+Here Andrew is teaching us Terraform by using it to host a website in S3 
+Bucket then use a custom provider to provision the website in one of the 
+Towns in Terratown.
+DESCRIPTION
+  #domain_name = module.terrahouse_aws.cloudfront_url
+  domain_name = module.terraform.cloudfront_domain_name
+  town = "missingo"
+  content_version = var.terraform.content_version
 }
 
 
