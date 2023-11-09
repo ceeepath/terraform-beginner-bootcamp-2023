@@ -39,28 +39,28 @@ instilling a possession-based style, promoting youth, and making shrewd, budget-
 DESCRIPTION
   #domain_name = module.terrahouse_aws.cloudfront_url
   domain_name = module.football_manager.cloudfront_domain_name
-  town = "missingo"
+  town = "gamers-grotto"
   content_version = var.football_manager.content_version
 }
 
-module "terraform" {
-  source = "./modules/terrahouse_aws"
-  teacherseat_user_uuid = var.teacherseat_user_uuid
-  public_path = var.terraform.public_path
-  content_version = var.terraform.content_version
-}
+# module "terraform" {
+#   source = "./modules/terrahouse_aws"
+#   teacherseat_user_uuid = var.teacherseat_user_uuid
+#   public_path = var.terraform.public_path
+#   content_version = var.terraform.content_version
+# }
 
-resource "terratowns_home" "terraform" {
-  name = "Terraform Beginner Bootcamp"
-  description = <<DESCRIPTION
-Here Andrew is teaching us Terraform by using it to host a website in S3 
-Bucket then use a custom provider to provision the website in one of the 
-Towns in Terratown.
-DESCRIPTION
-  #domain_name = module.terrahouse_aws.cloudfront_url
-  domain_name = module.terraform.cloudfront_domain_name
-  town = "missingo"
-  content_version = var.terraform.content_version
-}
+# resource "terratowns_home" "terraform" {
+#   name = "Terraform Beginner Bootcamp"
+#   description = <<DESCRIPTION
+# Here Andrew is teaching us Terraform by using it to host a website in S3 
+# Bucket then use a custom provider to provision the website in one of the 
+# Towns in Terratown.
+# DESCRIPTION
+#   #domain_name = module.terrahouse_aws.cloudfront_url
+#   domain_name = module.terraform.cloudfront_domain_name
+#   town = "missingo"
+#   content_version = var.terraform.content_version
+# }
 
 
